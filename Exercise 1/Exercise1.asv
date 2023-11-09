@@ -1,0 +1,2 @@
+data = load('dataMIDFLR1.mat');
+x = data

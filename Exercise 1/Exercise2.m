@@ -12,7 +12,7 @@ legend('Original data', 'Predicted values');
 % Calculate the covariance matrix of the estimator beta_LS
 N = length(y);
 n = size(X, 2);
-s2_LS = (2 / (N - n)) * var(y - y_hat);
+s2_LS = (1 / (N - n)) * sum((y - y_hat).^2);
 PhiTPhi_inv = inv(X' * X);
 cov_beta_LS = s2_LS * PhiTPhi_inv;
 
@@ -39,10 +39,10 @@ upper_bound = zeros(size(y));
 % Calculate confidence intervals for each data point
 for i = 1:length(y)
     Var_yt = X(i, :) * cov_beta_LS * X(i, :)';
-    confidence_interval = cp * sqrt(Var_yt);
+    confidence_interval = c_q * sqrt(Var_yt);
     
-    lower_bound(i) = y(i) - confidence_interval;
-    upper_bound(i) = y(i) + confidence_interval;
+    lower_bound(i) = y_hat(i) - confidence_interval;
+    upper_bound(i) = y_hat(i) + confidence_interval;
 end
 
 % Plot the data points and confidence intervals
